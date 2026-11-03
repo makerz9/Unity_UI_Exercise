@@ -40,7 +40,7 @@ public class DifficultyWindow : GenericWindow
 
     private void OnEnable()
     {
-        intDifficulty = PlayerPrefs.GetInt("CurrentDifficulty", intDifficulty);
+        intDifficulty = PlayerPrefs.GetInt("Difficulty", intDifficulty);
 
     }
     //private void Start()
@@ -48,27 +48,24 @@ public class DifficultyWindow : GenericWindow
     //    intDifficulty = 1;
     //}
 
+    public override void Open()
+    {
+        CurrentDifficulty = (Difficulty)PlayerPrefs.GetInt("Difficulty", 1);
+        base.Open();
+    }
+
+    public override void Close()
+    {
+        PlayerPrefs.SetInt("Difficulty", (int)CurrentDifficulty);
+        base.Close();
+    }
 
     private void Update()
     {
 
+        #region
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            if(intDifficulty > 0)
-            {
-                intDifficulty--;
-            }
-        }
-        else if(Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            if (intDifficulty < 2)
-            {
-                intDifficulty++;
-            }
-        }
-
-        if(intDifficulty == 0)
+        if (intDifficulty == 0)
         {
             CurrentDifficulty = Difficulty.Easy;
         }
@@ -99,18 +96,46 @@ public class DifficultyWindow : GenericWindow
             intDifficulty = 2;
         }
 
-        if(Input.GetKeyDown(KeyCode.Escape))
+
+        #endregion
+
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            int index = (int)CurrentDifficulty;
+
+            if (index > 0)
+            {
+                index--;
+            }
+
+            intDifficulty = index;
+            CurrentDifficulty = (Difficulty)index;
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            int index = (int)CurrentDifficulty;
+
+            if (index < toggles.Length - 1)
+            {
+                index++;
+            }
+
+            intDifficulty = index;
+            CurrentDifficulty = (Difficulty)index;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             manager.Open(Windows.Start);
         }
-
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Debug.Log(CurrentDifficulty);
             Debug.Log(intDifficulty);
             //저장
-            PlayerPrefs.SetInt("CurrentDifficulty", intDifficulty);
+            //PlayerPrefs.SetInt("CurrentDifficulty", intDifficulty);
+            PlayerPrefs.SetInt("Difficulty", (int)CurrentDifficulty);
 
         }
     }
