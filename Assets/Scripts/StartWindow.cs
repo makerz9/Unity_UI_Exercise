@@ -36,6 +36,7 @@ public class StartWindow : GenericWindow
     public void OnClickNewGame()
     {
         Debug.Log("OnClickNewGame");
+        manager.Open(Windows.Keyboard);
     }
 
     public void OnClickOption()

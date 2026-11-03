@@ -80,25 +80,16 @@ public class GameOverWindow : GenericWindow
 
         totalScore = Random.Range(0, 100000000);
 
-        float elapsed = 0f;
+        float elapsed = 0f; //지난 시간을 담은 변수?
 
-        float duration = 2f;
+        float duration = 2f; // 초
 
-        while (elapsed < duration)
+        while (elapsed < duration) //시간이 설정한 초가 될때까지
         {
-            elapsed += Time.deltaTime;
-            float t = elapsed / 2f;
-            int value = Mathf.RoundToInt(Mathf.Lerp(0, totalScore, t));
+            elapsed += Time.deltaTime; //시간변수에 시간만큼 더함???
+            float t = elapsed / 2f; //??
+            int value = Mathf.RoundToInt(Mathf.Lerp(0, totalScore, t)); //??
             textTotalScore.text = $"{value:D9}";
-            // 진행률 0~1
-            //float t = Mathf.Clamp01(elapsed / duration);
-
-            // 시작 점수부터 최종 점수까지 보간
-            //float currentValue = Mathf.Lerp(0f, totalScore, t);
-
-            //int displayScore = Mathf.RoundToInt(currentValue);
-
-            //Mathf.LerpUnclmap ????
 
             yield return null;
         }
