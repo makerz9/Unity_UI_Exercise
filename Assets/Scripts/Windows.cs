@@ -5,4 +5,6 @@ public enum Windows
     GameOver,
 
     Keyboard,
+
+    Difficulty,
 }
