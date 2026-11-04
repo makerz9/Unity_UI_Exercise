@@ -29,19 +29,16 @@ public class StartWindow : GenericWindow
 
     public void OnClickContinue()
     {
-        Debug.Log("OnClickContinue");
         manager.Open(Windows.GameOver);
     }
 
     public void OnClickNewGame()
     {
-        Debug.Log("OnClickNewGame");
         manager.Open(Windows.Keyboard);
     }
 
     public void OnClickOption()
     {
         Debug.Log("OnClickOption");
-        manager.Open(Windows.Difficulty);
     }
 }
