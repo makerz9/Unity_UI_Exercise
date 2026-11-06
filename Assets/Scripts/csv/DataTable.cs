@@ -13,6 +13,7 @@ public abstract class DataTable
 
     public static List<T> LoadCSV<T>(string csvText) //static을 쓴 이유
     {
+        Debug.Log(csvText);
         using(var reader = new StringReader(csvText))
         using(var csvReader = new CsvReader(reader, CultureInfo.InvariantCulture))
         {

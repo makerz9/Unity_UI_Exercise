@@ -16,17 +16,63 @@ public class CSVTest1 : MonoBehaviour
     
     private StringTable stringTable;
 
+    public UiItemButton[] itemButton;
+    public UiItemInfo itemInfo;
+
     private void Start()
     {
-        stringTable = new StringTable();
-        stringTable.Load("StringTableKr");
+        itemButton[0].SetItem("ITEM_1");   
+        itemButton[0].button.onClick.AddListener(()=> itemInfo.SetItem("ITEM_1"));
+        itemButton[1].SetItem("ITEM_2");   
+        itemButton[1].button.onClick.AddListener(()=> itemInfo.SetItem("ITEM_2"));
+        itemButton[2].SetItem("ITEM_3");  
+        itemButton[2].button.onClick.AddListener(()=> itemInfo.SetItem("ITEM_3"));
+        itemButton[3].SetItem("ITEM_4");   
+        itemButton[3].button.onClick.AddListener(()=> itemInfo.SetItem("ITEM_4"));
+    }
+    
 
-        Debug.Log(stringTable.Get("HI"));
-        Debug.Log(stringTable.Get("BYE"));
-
-        Debug.Log(stringTable.Get("DIE"));
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            //itemButton.SetEmpty();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            itemButton[0].SetItem("ITEM_1"); 
+            //Debug.Log(itemButton.SetItem("ITEM_1"));
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            itemButton[1].SetItem("ITEM_2");   
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            itemButton[2].SetItem("ITEM_3"); 
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            itemButton[3].SetItem("ITEM_4");  
+        }
     }
 
+    // private void Start()
+    // {
+
+    //     // Debug.Log(stringTable.Get("안녕"));
+    //     // Debug.Log(stringTable.Get("잘가"));
+
+    //     // Debug.Log(stringTable.Get("너 죽음"));
+
+    //     //stringTable = new StringTable();
+    //     //stringTable.Load("StringTableKr");
+    //     //stringTable.Load("StringTableEn");
+    //     //stringTable.Load("StringTableJp");
+    //     // var itemData = DataTableManager.ItemTable.Get("ITEM_1");
+    //     // Debug.Log($"{itemData.StringName}, {itemData.StringDesc}");
+    // }
+}
     // void Start()
     // {
 
@@ -58,8 +104,5 @@ public class CSVTest1 : MonoBehaviour
     // }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
-}
+
+

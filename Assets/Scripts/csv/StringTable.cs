@@ -18,7 +18,7 @@ public class StringTable : DataTable
         string path = string.Format(FormatPath, filename);
         TextAsset textAsset = Resources.Load<TextAsset>(path);
         List<Data> list = LoadCSV<Data>(textAsset.text);
-
+        //Debug.Log($"스 트 링 테 이 블 {textAsset.text}");
         foreach (var item in list)
         {
             if(!dictionary.ContainsKey(item.Id))
