@@ -1,8 +1,6 @@
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using UnityEditor.Overlays;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -108,6 +106,7 @@ public class jsonButton : MonoBehaviour
         //배치된 블럭 싹 없앰
 
         string path = Path.Combine(Application.persistentDataPath, "JsonTest2.json");
+        if (!File.Exists(path)) return;
         string json = File.ReadAllText(path);
 
         var saveDatas = JsonConvert.DeserializeObject<List<JsonTest2SaveData>>(json, jsonSettings);
@@ -186,33 +185,33 @@ public class jsonButton : MonoBehaviour
 
 
         //
-        var obj = new JsonTest2SaveData
-        {
-            position = randomPosition, 
-            rotation = randomRotation,
-            scale = randomScale,
-        };
+        //var obj = new JsonTest2SaveData
+        //{
+        //    position = randomPosition, 
+        //    rotation = randomRotation,
+        //    scale = randomScale,
+        //};
 
-        //컨버터를 만들었으면 직렬화, 역직렬화 양쪽에 등록해야 합니다.
-        var path = Path.Combine(Application.persistentDataPath, "test.json");
-        Debug.Log(path);
-        string json = JsonConvert.SerializeObject(
-            obj, Formatting.Indented,
-            new Vector3Converter(),
-            new QuaternionConverter(),
-            new ScaleConverter(),
-            new ColorObjectConverter()
-            );
-        File.WriteAllText(path, json);
+        ////컨버터를 만들었으면 직렬화, 역직렬화 양쪽에 등록해야 합니다.
+        //var path = Path.Combine(Application.persistentDataPath, "test.json");
+        //Debug.Log(path);
+        //string json = JsonConvert.SerializeObject(
+        //    obj, Formatting.Indented,
+        //    new Vector3Converter(),
+        //    new QuaternionConverter(),
+        //    new ScaleConverter(),
+        //    new ColorObjectConverter()
+        //    );
+        //File.WriteAllText(path, json);
 
-        var json2 = File.ReadAllText(path);
-        var obj2 = JsonConvert.DeserializeObject<PlayerState>(json2,
-        new Vector3Converter(),
-        new QuaternionConverter(),
-        new ScaleConverter(),
-        new ColorObjectConverter()
-        );
-        Debug.Log(obj2);
+        //var json2 = File.ReadAllText(path);
+        //var obj2 = JsonConvert.DeserializeObject<PlayerState>(json2,
+        //new Vector3Converter(),
+        //new QuaternionConverter(),
+        //new ScaleConverter(),
+        //new ColorObjectConverter()
+        //);
+        //Debug.Log(obj2);
 
 
 
