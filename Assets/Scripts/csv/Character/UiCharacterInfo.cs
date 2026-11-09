@@ -27,8 +27,8 @@ public class UiCharacterInfo : MonoBehaviour
 
     public void SetCharacter(ItemData id)
     {
-        SetCharacter(DataTableManager.ItemTable.Get(id));
-
+        //SetCharacter(DataTableManager.ItemTable.Get(id));
+        //!@#
     }
 
     public void SetCharacter(CharacterData data)
@@ -39,7 +39,7 @@ public class UiCharacterInfo : MonoBehaviour
             return;
         }
 
-        this.data = data;
+        //this.data = data;//!@#
         textName.text = data.StringName;
         icon.sprite = data.SpriteIcon;
         textHP.text = data.Type.ToString();

@@ -20,7 +20,8 @@ public class UiCharacterButton : MonoBehaviour
 
     public void SetCharacter(string characterId)
     {
-        SetCharacter(DataTableManager.ItemTable.Get(characterId));
+        //SetCharacter(DataTableManager.ItemTable.Get(characterId));
+        //!@#
 
         Debug.Log(DataTableManager.ItemTable.Get(characterId));
     }

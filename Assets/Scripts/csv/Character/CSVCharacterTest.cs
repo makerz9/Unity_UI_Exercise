@@ -22,14 +22,15 @@ public class CSVCharacterTest : MonoBehaviour
 
     private void Start()
     {
-        charcterButton[0].SetCharacter("CHAR_1");   
-        charcterButton[0].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_1"));
-        charcterButton[1].SetCharacter("CHAR_2");   
-        charcterButton[1].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_2"));
-        charcterButton[2].SetCharacter("CHAR_3");  
-        charcterButton[2].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_3"));
-        charcterButton[3].SetCharacter("CHAR_4");   
-        charcterButton[3].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_4"));
+        ////!@#
+        // charcterButton[0].SetCharacter("CHAR_1");   
+        // charcterButton[0].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_1"));
+        // charcterButton[1].SetCharacter("CHAR_2");   
+        // charcterButton[1].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_2"));
+        // charcterButton[2].SetCharacter("CHAR_3");  
+        // charcterButton[2].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_3"));
+        // charcterButton[3].SetCharacter("CHAR_4");   
+        // charcterButton[3].button.onClick.AddListener(()=> characterInfo.SetCharacter("CHAR_4"));
     }
     
 
