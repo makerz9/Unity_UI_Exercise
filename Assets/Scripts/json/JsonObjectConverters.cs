@@ -95,7 +95,34 @@ public class ScaleConverter : JsonConverter<Vector3>
     }
 }
 
+public class ColorObjectConverter : JsonConverter<Color>
+{
+    public override Color ReadJson(JsonReader reader, Type objectType, Color existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        JObject jObj = JObject.Load(reader);
+        Color c = Color.white;
 
+        c.r = (float)jObj["R"];
+        c.g = (float)jObj["G"];
+        c.b = (float)jObj["B"];
+        c.a = (float)jObj["A"]; //!@# w나 W 따로 선언 안했는데 왜 괜찮은지?
+        return c;
+    }
+
+    public override void WriteJson(JsonWriter writer, Color value, JsonSerializer serializer)
+    {
+        writer.WriteStartObject();
+        writer.WritePropertyName("R");
+        writer.WriteValue(value.r);
+        writer.WritePropertyName("G");
+        writer.WriteValue(value.g);
+        writer.WritePropertyName("B");
+        writer.WriteValue(value.b);
+        writer.WritePropertyName("A");
+        writer.WriteValue(value.a);
+        writer.WriteEndObject();
+    }
+}
 
 
 

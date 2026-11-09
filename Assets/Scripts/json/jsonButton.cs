@@ -23,13 +23,14 @@ public class JsonTest2SaveData //!@# 왜 쓰지 데이터를 왜 따로 담지 -
     public Vector3 position;
     public Quaternion rotation;
     public Vector3 scale;
+    public Color color;
 
     public override string ToString()//!@# 왜필요하지 -> 디버그 출력용 편의 기능
                                      //저장/불러오기와 무관. Debug.Log(data) 했을 때 클래스 이름 대신 값이 보이게 하는 용도.
     {
         //position.normalized
 
-        return $"{position} / {rotation} / {scale}";
+        return $"{position} / {rotation} / {scale} / {color}";
     }
 }
 
@@ -44,6 +45,16 @@ public class jsonButton : MonoBehaviour
 
     [SerializeField] private GameObject[] prefabs;
     [SerializeField] private List<GameObject> prefabPool = new List<GameObject>();
+    private JsonSerializerSettings jsonSettings;
+
+    private void Awake()
+    {
+        jsonSettings = new JsonSerializerSettings();
+        jsonSettings.Formatting = Formatting.Indented;
+        jsonSettings.Converters.Add(new Vector3Converter());
+        jsonSettings.Converters.Add(new QuaternionConverter());
+        jsonSettings.Converters.Add(new ColorObjectConverter());
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -70,6 +81,7 @@ public class jsonButton : MonoBehaviour
             data.position = obj.transform.position;
             data.rotation = obj.transform.rotation;
             data.scale = obj.transform.localScale;
+            data.color = obj.GetComponent<Renderer>().material.color;
             saveDatas.Add(data);
         }
 
@@ -78,7 +90,9 @@ public class jsonButton : MonoBehaviour
             saveDatas, 
             Formatting.Indented,
             new Vector3ObjectConverter(),
-            new QuaternionObjectConverter()
+            new QuaternionObjectConverter(),
+            new ScaleConverter(),
+            new ColorObjectConverter()
             );
         string path = Path.Combine(Application.persistentDataPath, "JsonTest2.json");
         Debug.Log(path);
@@ -96,12 +110,14 @@ public class jsonButton : MonoBehaviour
         string path = Path.Combine(Application.persistentDataPath, "JsonTest2.json");
         string json = File.ReadAllText(path);
 
-        //역직렬화
-        List<JsonTest2SaveData> saveDatas = JsonConvert.DeserializeObject<List<JsonTest2SaveData>>
-            (json,
-            new Vector3ObjectConverter(),
-            new QuaternionObjectConverter()
-            );
+        var saveDatas = JsonConvert.DeserializeObject<List<JsonTest2SaveData>>(json, jsonSettings);
+
+        ////역직렬화
+        //List<JsonTest2SaveData> saveDatas = JsonConvert.DeserializeObject<List<JsonTest2SaveData>>
+        //    (json,
+        //    new Vector3ObjectConverter(),
+        //    new QuaternionObjectConverter()
+        //    );
 
         foreach (var data in saveDatas)
         {
@@ -119,7 +135,7 @@ public class jsonButton : MonoBehaviour
             newGo.transform.position = data.position;
             newGo.transform.rotation = data.rotation;
             newGo.transform.localScale = data.scale;
-
+            newGo.GetComponent<Renderer>().material.color = data.color;
             prefabPool.Add(newGo);
         }
 
@@ -158,11 +174,13 @@ public class jsonButton : MonoBehaviour
         Vector3 randomPosition = Random.insideUnitSphere * 10f;
         Quaternion randomRotation = Random.rotation;
         Vector3 randomScale = Vector3.one * Random.Range(0.5f, 2f);
+        Color color = Random.ColorHSV();
 
         GameObject newGo = Instantiate(prefabs[randomIndex]);
         newGo.transform.position = randomPosition;
         newGo.transform.rotation = randomRotation;
         newGo.transform.localScale = randomScale;
+        newGo.GetComponent<Renderer>().material.color = color;
 
         prefabPool.Add(newGo);
 
@@ -182,14 +200,18 @@ public class jsonButton : MonoBehaviour
             obj, Formatting.Indented,
             new Vector3Converter(),
             new QuaternionConverter(),
-            new ScaleConverter());
+            new ScaleConverter(),
+            new ColorObjectConverter()
+            );
         File.WriteAllText(path, json);
 
         var json2 = File.ReadAllText(path);
         var obj2 = JsonConvert.DeserializeObject<PlayerState>(json2,
         new Vector3Converter(),
         new QuaternionConverter(),
-        new ScaleConverter());
+        new ScaleConverter(),
+        new ColorObjectConverter()
+        );
         Debug.Log(obj2);
 
 
