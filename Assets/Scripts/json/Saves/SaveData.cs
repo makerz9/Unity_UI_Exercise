@@ -1,4 +1,7 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.LowLevelPhysics2D.PhysicsLayers;
 
 
 public abstract class SaveData
@@ -9,6 +12,50 @@ public abstract class SaveData
 
 
 }
+
+
+public class SaveDataV5 : SaveData
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public int Gold { get; set; } = 100;
+
+    public List<SaveItemData> ItemList = new List<SaveItemData>();
+
+    public SaveDataV5()
+    {
+        Version = 5;
+    }
+
+    public override SaveData VersionUp()
+    {
+        throw new System.NotImplementedException();
+    }
+}
+
+
+public class SaveDataV4 : SaveData
+{
+    public string FirstName { get; set; } = string.Empty;
+    public string LastName { get; set; } = string.Empty;
+    public int Gold { get; set; } = 100;
+
+    public SaveDataV4()
+    {
+        Version = 4;
+    }
+
+    public override SaveData VersionUp()
+    {
+        var data = new SaveDataV5();
+        data.FirstName = FirstName;
+        data.LastName = LastName;
+        data.Gold = Gold;
+        return data;
+    }
+}
+
+
 
 public class SaveDataV2 : SaveData
 {
@@ -43,10 +90,23 @@ public class SaveDataV3 : SaveData
 
     public override SaveData VersionUp()
     {
-        throw new System.NotImplementedException();
+        var data = new SaveDataV4();
+        string[] parts = PlayerName.Split(" ");
+        data.FirstName = parts[0];
+        data.LastName = parts[0];
+        data.Gold = Gold;
+        return data;
     }
 
 }
+
+
+
+
+
+
+
+
 
 public class SaveDataV1 : SaveData
 {

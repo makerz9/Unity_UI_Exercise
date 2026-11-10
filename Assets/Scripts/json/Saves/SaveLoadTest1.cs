@@ -13,12 +13,20 @@ public class SaveLoadTest1 : MonoBehaviour
         btn.interactable = false;
     }
 
-    public void Save()
+
+    public void CreateItem()
     {
-        SaveLoadManager.Data = new SaveDataV3();
-        SaveLoadManager.Data.PlayerName = $"HyunKu Kang";
+        SaveLoadManager.Data.ItemList.Add(SaveItemData.GetRandomItem());
+    }
+
+
+    public void Save()  
+
+    {
+        SaveLoadManager.Data = new SaveDataV5();
+        SaveLoadManager.Data.FirstName = $"HyunKu";
+        SaveLoadManager.Data.LastName = $"Kang";
         SaveLoadManager.Data.Gold = Random.Range(10, 200);
-        SaveLoadManager.Data.EXP = Random.Range(0, 100);
         Debug.Log($"세이브 결과: {SaveLoadManager.Save()}");
     }
 
@@ -32,9 +40,12 @@ public class SaveLoadTest1 : MonoBehaviour
         //    btn.interactable = true;
         //}
         Debug.Log($"로드 결과: {SaveLoadManager.Load()}");
-        Debug.Log($"{SaveLoadManager.Data.PlayerName}");
-        Debug.Log($"골드 개수: {SaveLoadManager.Data.Gold}");
-        Debug.Log($"경험치 량:{SaveLoadManager.Data.EXP}");
+
+        foreach (var data in SaveLoadManager.Data.ItemList)
+        {
+            Debug.Log(data);
+        }
+
 
 
     }
