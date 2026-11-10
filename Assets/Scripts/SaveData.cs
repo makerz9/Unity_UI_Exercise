@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
 
 public abstract class SaveData
@@ -13,7 +12,7 @@ public class SaveDataV5 : SaveData
     public string FirstName { get; set; } = string.Empty;
     public string LastName { get; set; } = string.Empty;
     public int Gold { get; set; } = 100;
-    public List<SaveItemData> ItemList = new List<SaveItemData>();
+    public List<SaveItemData> ItemList { get; set; } = new List<SaveItemData>();
 
     public SaveDataV5()
     {

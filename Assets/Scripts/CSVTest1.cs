@@ -21,6 +21,8 @@ public class CSVTest1 : MonoBehaviour
         itemButtons[2].button.onClick.AddListener(() => itemInfo.SetItem("ITEM_3"));
         itemButtons[3].SetItem("ITEM_4");
         itemButtons[3].button.onClick.AddListener(() => itemInfo.SetItem("ITEM_4"));
+
+        
     }
 
     // private void Start()

@@ -17,6 +17,20 @@ public class ItemDataConverter : JsonConverter<ItemData>
     }
 }
 
+public class CharacterDataConverter : JsonConverter<ItemData>
+{
+    public override ItemData ReadJson(JsonReader reader, Type objectType, ItemData existingValue, bool hasExistingValue, JsonSerializer serializer)
+    {
+        var id = reader.Value as string;
+        return DataTableManager.ItemTable.Get(id);
+    }
+
+    public override void WriteJson(JsonWriter writer, ItemData value, JsonSerializer serializer)
+    {
+        writer.WriteValue(value.Id);
+    }
+}
+
 public class QuaternionConverter : JsonConverter<Quaternion>
 {
     public override Quaternion ReadJson(JsonReader reader, Type objectType, Quaternion existingValue, bool hasExistingValue, JsonSerializer serializer)

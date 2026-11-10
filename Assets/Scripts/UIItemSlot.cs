@@ -1,15 +1,13 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 
-
-//외부에서 세이브 아이케
-public class UIItemSlot : MonoBehaviour
+public class UiItemSlot : MonoBehaviour
 {
-
     public int SlotIndex { get; set; } = -1;
 
     public Button button;
+
     public Image icon;
     public TMP_Text textItemName;
 
@@ -28,8 +26,4 @@ public class UIItemSlot : MonoBehaviour
         icon.sprite = ItemData.ItemData.SpriteIcon;
         textItemName.text = ItemData.ItemData.StringName;
     }
-
-
-
-
 }

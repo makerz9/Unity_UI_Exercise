@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,12 +21,14 @@ public class UiItemSlotList : MonoBehaviour
         Consumable,
     }
 
-
     public readonly System.Comparison<SaveItemData>[] comparisons =
     {
-        (lhs,  rhs) => lhs.CreationTime.CompareTo(rhs.CreationTime), //오름차순
-        (rhs,  lhs) => rhs.CreationTime.CompareTo(lhs.CreationTime), //내림차순
+        (lhs, rhs) => lhs.CreationTime.CompareTo(rhs.CreationTime),
+        (lhs, rhs) => rhs.CreationTime.CompareTo(lhs.CreationTime),
+        (lhs, rhs) => lhs.ItemData.StringName.CompareTo(rhs.ItemData.StringName),
+        (lhs, rhs) => rhs.ItemData.StringName.CompareTo(lhs.ItemData.StringName),
     };
+
     public readonly System.Predicate<SaveItemData>[] filterings =
     {
         (x) => true,
@@ -36,10 +37,21 @@ public class UiItemSlotList : MonoBehaviour
         (x) => x.ItemData.Type == ItemTypes.Consumable,
     };
 
-
     private SortingOptions sorting = SortingOptions.CreationTimeAsscending;
     private FilteringOptions filtering = FilteringOptions.None;
 
+    public SortingOptions Sorting
+    {
+        get => sorting;
+        set
+        {
+            if (sorting != value)
+            {
+                sorting = value;
+                UpdateSlot();
+            }
+        }
+    }
 
     public FilteringOptions Filtering
     {
@@ -54,39 +66,32 @@ public class UiItemSlotList : MonoBehaviour
         }
     }
 
-    public SortingOptions Sorting
-    {
-        get => sorting;
-        set
-        {
-            if(sorting != value)
-            {
-                sorting = value;
-                UpdateSlot();
-            }
-        }
-    }
-
     private int selectedSlot = -1;
-    public UnityEvent OnupdateSlots;
+
+    public UnityEvent OnUpdateSlots;
     public UnityEvent<SaveItemData> OnSelectSlot;
 
-    public UIItemSlot prefab;
+    public UiItemSlot prefab;
 
-    public ScrollRect scrollRect; 
+    public ScrollRect scrollRect;
 
-    public List<UIItemSlot> uiSlotList = new List<UIItemSlot>();
+    private List<UiItemSlot> uiSlotList = new List<UiItemSlot>();
 
-    private List<SaveItemData> saveItemDataList;
+    private List<SaveItemData> saveItemDataList = new List<SaveItemData>();
 
     private void Start()
     {
         OnSelectSlot.AddListener((x) => Debug.Log(x));
     }
 
+    private void OnEnable()
+    {
+        Variables.OnLanguageChanged += UpdateSlot;
+    }
+
     private void OnDisable()
     {
-        saveItemDataList = null;
+        Variables.OnLanguageChanged -= UpdateSlot;
     }
 
     public void SetSaveItemDataList(List<SaveItemData> source)
@@ -103,51 +108,43 @@ public class UiItemSlotList : MonoBehaviour
     private void UpdateSlot()
     {
         var list = saveItemDataList.FindAll(filterings[(int)filtering]);
-        list.Sort(comparisons[(int)sorting]); //소팅부분
-
-        if(uiSlotList.Count < list.Count)
+        list.Sort(comparisons[(int)sorting]);
+        if (uiSlotList.Count < list.Count)
         {
-            for(int i = uiSlotList.Count; i < list.Count; i++)
+            for (int i = uiSlotList.Count; i < list.Count; ++i)
             {
                 var newSlot = Instantiate(prefab, scrollRect.content);
                 newSlot.SlotIndex = i;
                 newSlot.SetEmpty();
                 newSlot.gameObject.SetActive(false);
-
-                newSlot.gameObject.SetActive(false);
-
                 newSlot.button.onClick.AddListener(() =>
                 {
                     selectedSlot = newSlot.SlotIndex;
-                    if(newSlot.ItemData != null)
+                    if (newSlot.ItemData != null)
                     {
                         OnSelectSlot.Invoke(newSlot.ItemData);
                     }
-                    
                 });
-
                 uiSlotList.Add(newSlot);
             }
         }
 
-        for(int i = 0; i < uiSlotList.Count; ++i)
+        for (int i = 0; i < uiSlotList.Count; ++i)
         {
-            if(i < list.Count)
+            if (i < list.Count)
             {
                 uiSlotList[i].gameObject.SetActive(true);
                 uiSlotList[i].SetItem(list[i]);
-
             }
             else
             {
                 uiSlotList[i].gameObject.SetActive(false);
                 uiSlotList[i].SetEmpty();
             }
-
-
         }
+
         selectedSlot = -1;
-        OnupdateSlots.Invoke();
+        OnUpdateSlots.Invoke();
     }
 
     public void AddRandomItem()
@@ -158,14 +155,11 @@ public class UiItemSlotList : MonoBehaviour
 
     public void RemoveItem()
     {
-        Debug.Log("RemoveItem");
-        if(selectedSlot == -1)
+        if (selectedSlot == -1)
         {
             return;
         }
         saveItemDataList.Remove(uiSlotList[selectedSlot].ItemData);
         UpdateSlot();
     }
-
-
 }
