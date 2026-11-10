@@ -1,27 +1,25 @@
 using UnityEngine;
 using System;
 
-public enum CharacterTypes
-{
-    Tanker,
-    Dealer,
-    Supporter,
+//public enum CharacterTypes
+//{
+//    Tanker,
+//    Dealer,
+//    Supporter,
 
-}
+//}
 
 public class CharacterData
 {
-    //public string 
+    public string Id { get; set; }
+    public string Name { get; set; }
+    public string Hp { get; set; }
+    public int Atk { get; set; }
+    public int Def { get; set; }
+    public string Speed { get; set; }
+    public string Icon { get; set; }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public string StringName => DataTableManager.StringTable.Get(Name);
+    public string StringDesc => DataTableManager.StringTable.Get(Desc);
+    public Sprite SpriteIcon => Resources.Load<Sprite>($"Icon/{Icon}");
 }

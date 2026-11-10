@@ -17,15 +17,15 @@ public class ItemDataConverter : JsonConverter<ItemData>
     }
 }
 
-public class CharacterDataConverter : JsonConverter<ItemData>
+public class CharacterDataConverter : JsonConverter<CharacterData>
 {
-    public override ItemData ReadJson(JsonReader reader, Type objectType, ItemData existingValue, bool hasExistingValue, JsonSerializer serializer)
+    public override CharacterData ReadJson(JsonReader reader, Type objectType, CharacterData existingValue, bool hasExistingValue, JsonSerializer serializer)
     {
         var id = reader.Value as string;
         return DataTableManager.ItemTable.Get(id);
     }
 
-    public override void WriteJson(JsonWriter writer, ItemData value, JsonSerializer serializer)
+    public override void WriteJson(JsonWriter writer, CharacterData value, JsonSerializer serializer)
     {
         writer.WriteValue(value.Id);
     }
