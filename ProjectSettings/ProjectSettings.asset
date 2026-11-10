@@ -681,7 +681,7 @@ PlayerSettings:
   webWasm2023: 0
   webEnableSubmoduleStrippingCompatibility: 0
   scriptingDefineSymbols:
-    Standalone: DEF_EDITOR
+    Standalone: 
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend:
