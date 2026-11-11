@@ -3,6 +3,7 @@ using UnityEngine;
 
 public static class DataTableManager
 {
+    //DataTableManager  =  사물함 (Dictionary<string, DataTable>)
     private static readonly Dictionary<string, DataTable> tables =
         new Dictionary<string, DataTable>();
 

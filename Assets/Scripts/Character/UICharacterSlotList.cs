@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class UICharacterSlotList : MonoBehaviour
 {
+    //public SlotIndex { get; set; }
+
     public enum SortingOptions
     {
         CreationTimeAsscending,

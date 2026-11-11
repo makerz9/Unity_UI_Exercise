@@ -9,7 +9,8 @@ public class SaveCharacterData : MonoBehaviour
 
     [JsonConverter(typeof(CharacterDataConverter))]
 
-    public CharacterData charaData { get; set; }
+    public CharacterData characterData { get; set; }
+    
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
